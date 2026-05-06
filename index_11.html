@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AICA Challenge 2026</title>
+
+  <style>
+    :root {
+      --bg-main: #020817;
+      --bg-card: rgba(13, 27, 60, 0.88);
+      --bg-card-2: rgba(18, 35, 77, 0.92);
+      --text-main: #f4f7ff;
+      --text-muted: #b8c6e6;
+      --line: rgba(255, 255, 255, 0.11);
+      --blue: #78c7ff;
+      --blue-2: #5c84ff;
+      --gold: #e8d46d;
+      --orange: #f0a24f;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Inter, Arial, sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at 15% 8%, rgba(120, 199, 255, 0.15), transparent 28%),
+        radial-gradient(circle at 82% 6%, rgba(92, 132, 255, 0.17), transparent 26%),
+        radial-gradient(circle at 50% 95%, rgba(240, 162, 79, 0.10), transparent 28%),
+        linear-gradient(120deg, #06152e 0%, #03091c 52%, #03001f 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(2, 8, 23, 0.78);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 650;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .nav-btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #86ccff, #5d83ff);
+      color: #061126 !important;
+      font-weight: 850 !important;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 62px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      color: #92d8ff;
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .launch-line {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font-size: clamp(18px, 2.1vw, 26px);
+      font-weight: 850;
+      letter-spacing: -0.01em;
+    }
+
+    .hero h1 {
+      margin: 0 0 20px;
+      font-size: clamp(38px, 5.6vw, 70px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 950;
+    }
+
+    .gradient-title {
+      background: linear-gradient(135deg, #ffffff 0%, #9bdfff 42%, #e9d66d 72%, #ffffff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      margin: 0;
+      max-width: 760px;
+      font-size: 19px;
+      color: var(--text-muted);
+    }
+
+    .registration-line {
+      margin-top: 26px;
+      color: white;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 850;
+      transition: 0.2s ease;
+      border: 1px solid var(--line);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #82caff, #5d80ff);
+      color: #061126;
+      border: none;
+      box-shadow: 0 14px 34px rgba(93, 128, 255, 0.25);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.07);
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero-art {
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-art::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(120,199,255,0.30), transparent, rgba(240,162,79,0.20));
+      filter: blur(16px);
+      z-index: -1;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+
+    /* Section */
+    .section {
+      padding: 36px 0;
+    }
+
+    .statement-card {
+      background:
+        linear-gradient(135deg, rgba(18, 35, 77, 0.95), rgba(10, 22, 50, 0.92));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+    }
+
+    .statement-card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 950;
+    }
+
+    .statement-card p {
+      margin: 0;
+      max-width: 1050px;
+      color: var(--text-muted);
+      font-size: 19px;
+    }
+
+    /* AICA Challenge Highlights */
+    .final-section {
+      padding: 42px 0 58px;
+    }
+
+    .final-card {
+      background:
+        linear-gradient(135deg, rgba(18, 35, 77, 0.95), rgba(10, 22, 50, 0.92));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .final-content h2 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      font-weight: 950;
+      color: white;
+    }
+
+    .final-content > p {
+      margin: 0 0 24px;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .ordered-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .ordered-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid var(--line);
+    }
+
+    .order-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      color: #061126;
+      background: linear-gradient(135deg, #82caff, #5d80ff);
+    }
+
+    .ordered-item h3 {
+      margin: 0 0 4px;
+      color: white;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .ordered-item p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 15.5px;
+      line-height: 1.45;
+    }
+
+    .final-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .flyer-wrap {
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+    }
+
+    .flyer-image {
+      width: 100%;
+      height: 100%;
+      max-height: 620px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 0;
+      border: none;
+    }
+
+    /* Bottom Logos */
+    .bottom-logo-section {
+      padding: 30px 0 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .bottom-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .bottom-logo {
+      max-height: 62px;
+      max-width: 230px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+    }
+
+    .bottom-logo.smc-main {
+      max-height: 78px;
+    }
+
+    .site-footer {
+      padding: 12px 0 28px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .final-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image {
+        min-height: 340px;
+      }
+
+      .flyer-image {
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        min-height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .hero-text {
+        font-size: 18px;
+      }
+
+      .hero-actions,
+      .final-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .ordered-item {
+        grid-template-columns: 36px 1fr;
+      }
+
+      .order-number {
+        width: 36px;
+        height: 36px;
+      }
+
+      .bottom-logo-row {
+        gap: 20px;
+      }
+
+      .bottom-logo {
+        max-height: 44px;
+        max-width: 150px;
+      }
+
+      .bottom-logo.smc-main {
+        max-height: 58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">
+        <div>
+          <p class="brand-title">AICA Challenge 2026</p>
+          <p class="brand-subtitle">IEEE SMC 2026 • Bellevue, Washington, USA</p>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#details">Details</a>
+        <a href="#highlights">Highlights</a>
+        <a class="nav-btn" href="https://forms.gle/p5vMtzwhAZP7o1nU9">Register Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">IEEE SMC 2026 Competition</div>
+
+          <p class="launch-line">Build, simulate, test, and deliver.</p>
+
+          <h1>
+            <span class="gradient-title">AI-Powered Collaborative Autonomy Challenge</span>
+          </h1>
+
+          <p class="hero-text">
+            The IEEE SMC AICA Challenge 2026 is a competition focused on the
+            development of innovative solutions for collaborative autonomous systems.
+            In this first year of the competition, the scenario features a multimodal
+            autonomous delivery system consisting of a QCar2 ground vehicle and a QDrone2
+            aerial vehicle in a simulation environment.
+          </p>
+
+          <p class="registration-line">Registration Open now</p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://forms.gle/p5vMtzwhAZP7o1nU9">Register Now</a>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <img class="hero-image" src="./images/banner_page.png" alt="AICA Challenge Banner">
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAILS SECTION -->
+    <section class="section" id="details">
+      <div class="container">
+        <div class="statement-card">
+          <h2>Where Autonomy Meets Practical Delivery</h2>
+
+        
+            <p>
+                 As part of IEEE SMC 2026, held October 4–7, 2026, in Bellevue, WA, USA, the AICA Challenge provides students with a hands-on opportunity to develop innovative AI solutions using Quanser Interactive Labs (QLabs), the QCar2 ground vehicle, and the QDrone2 aerial vehicle platforms. The challenge is based on a realistic logistics scenario where packages are delivered from a pickup location to customers through path planning, control algorithms, and AI-driven decision-making.
+            </p>
+        
+        </div>
+      </div>
+    </section>
+
+    <!-- AICA CHALLENGE HIGHLIGHTS -->
+    <section class="final-section" id="highlights">
+      <div class="container">
+        <div class="final-card">
+          <div class="final-content">
+            <h2>AICA Challenge Highlights</h2>
+
+            <p>
+              A simple overview of how teams participate in the AICA Challenge, from registration
+              to the Virtual Stage and selected On-Site Finals at IEEE SMC 2026.
+            </p>
+
+            <div class="ordered-list">
+            <div class="ordered-item">
+                <div class="order-number">1</div>
+                <div>
+                <h3>Register</h3>
+                <p>
+                    Register your team and review the AICA Challenge Home Portal for the latest competition information.
+                </p>
+                </div>
+            </div>
+
+            <div class="ordered-item">
+                <div class="order-number">2</div>
+                <div>
+                <h3>Develop</h3>
+                <p>
+                    Build and test your solution in Quanser Interactive Labs (QLabs) using Python or MATLAB/Simulink.
+                </p>
+                </div>
+            </div>
+
+            <div class="ordered-item">
+                <div class="order-number">3</div>
+                <div>
+                <h3>Submit</h3>
+                <p>
+                    Submit a Virtual Stage video demonstrating your solution and mission execution.
+                </p>
+                </div>
+            </div>
+
+            <div class="ordered-item">
+                <div class="order-number">4</div>
+                <div>
+                <h3>Compete</h3>
+                <p>
+                    Selected teams advance to the On-Site Finals at IEEE SMC 2026.
+                </p>
+                </div>
+            </div>
+            </div>
+
+            <div class="final-actions">
+              <a class="btn btn-secondary" href="https://utadnclab.github.io/AICA-Competition-Documentation-2026/00_Portal/AICA_PORTAL.html">
+                Visit Website
+              </a>
+
+              <a class="btn btn-secondary" href="./images/flyer.pdf" download>
+                Download Flyer
+              </a>
+            </div>
+          </div>
+
+          <div class="flyer-wrap">
+            <img class="flyer-image" src="./images/flyer_image.png" alt="AICA Challenge Flyer">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM LOGOS -->
+    <section class="bottom-logo-section">
+      <div class="container">
+        <div class="bottom-logo-row">
+          <img class="bottom-logo smc-main" src="./images/logo_smc_2026.png" alt="IEEE SMC 2026">
+          <img class="bottom-logo" src="./images/ieee_SMC_main_logo.jpg" alt="IEEE SMC Society">
+          <img class="bottom-logo" src="./images/Quanser_logo.jpg" alt="Quanser">
+          <img class="bottom-logo" src="./images/uta_logo_white.png" alt="The University of Texas at Arlington">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      AICA Challenge 2026 • IEEE SMC 2026 • Bellevue, Washington, USA
+    </div>
+  </footer>
+
+</body>
+</html>
